@@ -127,19 +127,18 @@ namespace Xenko.Rendering
                 return cachedEffects.ContainsKey(effect.Bytecode);
             }
         }
-        
+
         /// <summary>
         /// Loads the effect.
         /// </summary>
         /// <param name="effectName">Name of the effect.</param>
         /// <param name="compilerParameters">The compiler parameters.</param>
-        /// <param name="usedParameters">The used parameters.</param>
         /// <returns>A new instance of an effect.</returns>
         /// <exception cref="System.InvalidOperationException">Could not compile shader. Need fallback.</exception>
         public TaskOrResult<Effect> LoadEffect(string effectName, CompilerParameters compilerParameters)
         {
-            if (effectName == null) throw new ArgumentNullException("effectName");
-            if (compilerParameters == null) throw new ArgumentNullException("compilerParameters");
+            if (effectName == null) throw new ArgumentNullException(nameof(effectName));
+            if (compilerParameters == null) throw new ArgumentNullException(nameof(compilerParameters));
 
             // Setup compilation parameters
             // GraphicsDevice might have been not valid until this point, which is why we compute platform and profile only at this point
@@ -358,7 +357,7 @@ namespace Xenko.Rendering
                     return null;
 
                 // Compiler Parameters are supposed to be created in the same order every time, so we just check if they were created in the same order (ParameterKeyInfos) with same values (ObjectValues)
-                
+
                 // TODO GRAPHICS REFACTOR we could probably compute a hash for faster lookup
                 foreach (var compiledResults in compilerResultsList)
                 {

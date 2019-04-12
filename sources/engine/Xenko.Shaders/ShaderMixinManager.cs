@@ -10,7 +10,7 @@ namespace Xenko.Shaders
     /// <summary>
     /// Manages <see cref="IShaderMixinBuilder"/> and generation of shader mixins.
     /// </summary>
-    public class ShaderMixinManager
+    public static class ShaderMixinManager
     {
         private static readonly Dictionary<string, IShaderMixinBuilder> RegisteredBuilders = new Dictionary<string, IShaderMixinBuilder>();
 
@@ -26,11 +26,8 @@ namespace Xenko.Shaders
         /// </exception>
         public static void Register(string xkfxEffectName, IShaderMixinBuilder builder)
         {
-            if (xkfxEffectName == null)
-                throw new ArgumentNullException("xkfxEffectName");
-
-            if (builder == null)
-                throw new ArgumentNullException("builder");
+            if (xkfxEffectName == null) throw new ArgumentNullException(nameof(xkfxEffectName));
+            if (builder == null) throw new ArgumentNullException(nameof(builder));
 
             lock (RegisteredBuilders)
             {
@@ -46,7 +43,7 @@ namespace Xenko.Shaders
         /// <exception cref="System.ArgumentNullException">xkfxEffectName</exception>
         public static bool Contains(string xkfxEffectName)
         {
-            if (xkfxEffectName == null) throw new ArgumentNullException("xkfxEffectName");
+            if (xkfxEffectName == null) throw new ArgumentNullException(nameof(xkfxEffectName));
 
             var effectName = GetEffectName(xkfxEffectName);
             var rootEffectName = effectName.Key;
@@ -66,8 +63,7 @@ namespace Xenko.Shaders
         /// <exception cref="System.ArgumentNullException">xkfxEffectName</exception>
         public static bool TryGet(string xkfxEffectName, out IShaderMixinBuilder builder)
         {
-            if (xkfxEffectName == null)
-                throw new ArgumentNullException("xkfxEffectName");
+            if (xkfxEffectName == null) throw new ArgumentNullException(nameof(xkfxEffectName));
 
             lock (RegisteredBuilders)
             {
@@ -89,10 +85,8 @@ namespace Xenko.Shaders
         /// <exception cref="System.ArgumentException">xkfxEffectName</exception>
         public static ShaderMixinSource Generate(string xkfxEffectName, ParameterCollection properties)
         {
-            if (xkfxEffectName == null) throw new ArgumentNullException("xkfxEffectName");
-
-            if (properties == null)
-                throw new ArgumentNullException("properties");
+            if (xkfxEffectName == null) throw new ArgumentNullException(nameof(xkfxEffectName));
+            if (properties == null) throw new ArgumentNullException(nameof(properties));
 
             // Get the effect name and child effect name "RootEffectName.ChildEffectName"
             var effectName = GetEffectName(xkfxEffectName);

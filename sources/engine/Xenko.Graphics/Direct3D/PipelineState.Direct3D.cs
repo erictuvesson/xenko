@@ -181,14 +181,18 @@ namespace Xenko.Graphics
                         if (inputSignature == null)
                             inputSignature = shaderBytecode;
                         break;
+
                     case ShaderStage.Domain:
                         domainShader = pipelineStateCache.DomainShaderCache.Instantiate(shaderBytecode);
                         break;
+
                     case ShaderStage.Hull:
                         hullShader = pipelineStateCache.HullShaderCache.Instantiate(shaderBytecode);
                         break;
+
                     case ShaderStage.Geometry:
-                        if (reflection.ShaderStreamOutputDeclarations != null && reflection.ShaderStreamOutputDeclarations.Count > 0)
+                        System.Diagnostics.Debug.Assert(GraphicsDevice.Features.CurrentProfile >= GraphicsProfile.Level_11_0, $"Must have {nameof(GraphicsProfile.Level_11_0)} or higher to use Geometry shader.");
+                        if (reflection.ShaderStreamOutputDeclarations?.Count > 0)
                         {
                             // stream out elements
                             var soElements = new List<SharpDX.Direct3D11.StreamOutputElement>();
@@ -213,9 +217,11 @@ namespace Xenko.Graphics
                             geometryShader = pipelineStateCache.GeometryShaderCache.Instantiate(shaderBytecode);
                         }
                         break;
+
                     case ShaderStage.Pixel:
                         pixelShader = pipelineStateCache.PixelShaderCache.Instantiate(shaderBytecode);
                         break;
+
                     case ShaderStage.Compute:
                         computeShader = pipelineStateCache.ComputeShaderCache.Instantiate(shaderBytecode);
                         break;
